@@ -43,46 +43,90 @@
           }
         };
 
-        function loadTitleScene() {
-          const titleSceneEl = document.getElementById('title-scene');
-          if (!titleSceneEl) return;
+        function loadScene(targetId, fileName, fallbackHtml) {
+          const target = document.getElementById(targetId);
+          if (!target) return;
 
-          fetch('./scenes/title.html')
+          fetch(`./scenes/${fileName}`)
             .then((response) => {
-              if (!response.ok) throw new Error('title.html not found');
+              if (!response.ok) throw new Error(`${fileName} not found`);
               return response.text();
             })
             .then((html) => {
-              titleSceneEl.innerHTML = html;
+              target.innerHTML = html;
             })
             .catch(() => {
-              titleSceneEl.innerHTML = `
-                <section class="title-scene__frame">
-                  <div class="title-scene__content">
-                    <h1 class="title-scene__title" aria-label="The Last Pizza">
-                      <span class="title-scene__title-main">🍕 最 後 一 個 P I Z Z A 🍕</span>
-                      <span class="title-scene__title-sub">T h e L a s t P i z z a</span>
-                    </h1>
-
-                    <div class="title-scene__cta">
-                      <button id="title-start-btn" class="title-scene__start-btn" type="button">Start</button>
-
-                      <div id="title-options" class="title-scene__options" aria-hidden="true">
-                        <button id="title-start-action" class="title-scene__option-btn title-scene__option-btn--start" type="button">直接開始</button>
-                        <button id="title-tutorial-action" class="title-scene__option-btn title-scene__option-btn--tutorial" type="button">教學</button>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-              `;
+              target.innerHTML = fallbackHtml;
             });
         }
 
+        function loadTitleScene() {
+          loadScene('title-scene', 'title.html', `
+            <section class="title-scene__frame">
+              <div class="title-scene__content">
+                <h1 class="title-scene__title" aria-label="The Last Pizza">
+                  <span class="title-scene__title-main">🍕 最 後 一 個 P I Z Z A 🍕</span>
+                  <span class="title-scene__title-sub">T h e L a s t P i z z a</span>
+                </h1>
+
+                <div class="title-scene__cta">
+                  <button id="title-start-btn" class="title-scene__start-btn" type="button">Start</button>
+
+                  <div id="title-options" class="title-scene__options" aria-hidden="true">
+                    <button id="title-start-action" class="title-scene__option-btn title-scene__option-btn--start" type="button">直接開始</button>
+                    <button id="title-tutorial-action" class="title-scene__option-btn title-scene__option-btn--tutorial" type="button">教學</button>
+                  </div>
+                </div>
+              </div>
+            </section>
+          `);
+        }
+
+        function loadTutorialScene() {
+          loadScene('tutorial-scene', 'tutorial.html', `
+            <section class="tutorial-scene__frame">
+              <div class="tutorial-scene__content">
+                <header class="tutorial-scene__header">
+                  <p class="tutorial-scene__eyebrow">GAME RULES</p>
+                  <h2 class="tutorial-scene__title">教學</h2>
+                </header>
+
+                <div class="tutorial-scene__rules">
+                  <article class="tutorial-card tutorial-card--gold">
+                    <span class="tutorial-card__label">RULE 01</span>
+                    <h3 class="tutorial-card__title">比 1</h3>
+                    <p class="tutorial-card__text">當你比出 1 個手指時，代表拿 1 片披薩。</p>
+                  </article>
+
+                  <article class="tutorial-card tutorial-card--blue">
+                    <span class="tutorial-card__label">RULE 02</span>
+                    <h3 class="tutorial-card__title">比 2</h3>
+                    <p class="tutorial-card__text">當你比出 2 個手指時，代表拿 2 片披薩。</p>
+                  </article>
+
+                  <article class="tutorial-card tutorial-card--red">
+                    <span class="tutorial-card__label">RULE 03</span>
+                    <h3 class="tutorial-card__title">最後一片</h3>
+                    <p class="tutorial-card__text">拿到最後一片的人輸；每回合只能拿 1 或 2 片，不能亂拿。</p>
+                  </article>
+                </div>
+
+                <div class="tutorial-scene__actions">
+                  <button id="tutorial-back-btn" class="tutorial-scene__btn tutorial-scene__btn--ghost" type="button">返回</button>
+                  <button id="tutorial-start-btn" class="tutorial-scene__btn tutorial-scene__btn--primary" type="button">開始對戰</button>
+                </div>
+              </div>
+            </section>
+          `);
+        }
+
         loadTitleScene();
+        loadTutorialScene();
         window.sceneManager.show('title');
       })();
     </script>
 
     <script src="./scenes/title.js"></script>
+    <script src="./scenes/tutorial.js"></script>
   </body>
 </html>
