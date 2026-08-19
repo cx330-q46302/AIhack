@@ -4,6 +4,8 @@
   <div class="match-scene__camera-panel" aria-label="玩家手勢鏡頭">
     <div class="match-scene__camera-title">人像</div>
     <div class="match-scene__camera-feed">
+      <video id="match-camera-video" autoplay playsinline muted></video>
+      <canvas id="match-camera-overlay" aria-hidden="true"></canvas>
       <div class="match-scene__camera-feed-glow"></div>
     </div>
   </div>
@@ -20,7 +22,7 @@
 
   <div class="match-scene__count-panel">
     <div class="match-scene__count-copy">取得<br>剩餘<br>披薩<br>數量</div>
-    <div class="match-scene__count-number">3</div>
+    <div id="match-pizza-count" class="match-scene__count-number">3</div>
   </div>
 
   <div class="match-scene__status-banner">最後一個拿到 pizza 的人贏</div>

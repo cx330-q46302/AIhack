@@ -400,6 +400,22 @@ body {
   overflow: hidden;
 }
 
+.match-scene__camera-feed video,
+.match-scene__camera-feed canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+.match-scene__camera-feed canvas {
+  z-index: 2;
+  pointer-events: none;
+}
+
 .match-scene__camera-feed::before {
   content: "";
   position: absolute;
